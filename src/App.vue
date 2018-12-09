@@ -5,34 +5,65 @@
     <hr style="border: 1px solid rgba(0, 0, 0, 0.5;">
     <Create @create="newUser" @update='updated' v-bind:update=updateUser />
     <!-- <Home msg='123' /> -->
+    <br>
     <hr style="border: 1px solid rgba(0, 0, 0, 0.5;">
     <h4>All users</h4>
-    <ol class="collection">
-      <li class="collection-item left-align" v-for='(user , index) in users' :key="user.on">
+    <ul id='small' class="row">
+      <li class="collection left-align" v-for='(user , index) in users' :key="user.on">
         <span v-if='user.on'>
-          <span class="switch">
+          <div class="switch col s12 m3 l3 qender">
             <label>
               <span @click='onOff(index,user.userName)'>Off</span>
               <input type="checkbox" checked="checked">
               <span @click='onOff(index,user.userName)' class="lever"></span>
-              <span @click='onOff(index,user.userName)'>Contacted</span>
+              <span @click='onOff(index,user.userName)'>On</span>
             </label>
-          </span>
+          </div>
         </span>
         <span v-else>
-          <span class="switch">
+          <div class="switch col s12 m3 l3 qender">
             <label>
               <span @click='onOff(index,user.userName)'>Off</span>
               <input type="checkbox">
               <span @click='onOff(index,user.userName)' class="lever"></span>
-              <span @click='onOff(index,user.userName)'>Contacted</span>
+              <span @click='onOff(index,user.userName)'>On</span>
+            </label>
+          </div>
+        </span>
+        <div v-if='user.on' v-bind:style='{ color : color }' @click='update(user ,index)' class="qender">{{ user.userName }} - {{ user.email}}</div>
+        <div v-else @click='update(user, index)' class="qender">{{ user.userName }} - {{ user.email}}</div>
+        <div style="cursor:pointer; width:40%; float:right; color:white; margin:10px 40px 20px 5px" class="new badge red darken-4 collection-item" data-badge-caption="" @click='deleteUser(index)'>Delete</div>
+        <div v-bind:class="{ blue: user.gender == 'Male' }" style="width:40%; float:right; color:white; margin:10px 0 20px 0" class="new badge red tooltipped collection-item" data-badge-caption="age">{{user.age}}</div>
+      </li>
+    </ul>
+
+    <ol id='medium-large' class="collection row">
+      <li class="collection-item left-align" v-for='(user , index) in users' :key="user.on">
+        <span v-if='user.on'>
+          <span id="special1" class="switch col s12 m3 l3">
+            <label>
+              <span @click='onOff(index,user.userName)'>Off</span>
+              <input type="checkbox" checked="checked">
+              <span @click='onOff(index,user.userName)' class="lever"></span>
+              <span @click='onOff(index,user.userName)'>On</span>
             </label>
           </span>
         </span>
-        <span v-if='user.on' v-bind:style='{ color : color }' @click='update(user ,index)'>{{ user.userName }} - {{ user.email}}</span>
-        <span v-else @click='update(user, index)'>{{ user.userName }} - {{ user.email}}</span>
-        <span style="cursor:pointer" class="new badge red darken-4" data-badge-caption="" @click='deleteUser(index)'>Delete</span>
-        <span v-bind:class="{ blue: user.gender == 'Male' }" class="new badge red tooltipped" data-badge-caption="age">{{user.age}}</span>
+        <span v-else>
+          <span id="special1" class="switch col s12 m3 l3">
+            <label>
+              <span @click='onOff(index,user.userName)'>Off</span>
+              <input type="checkbox">
+              <span @click='onOff(index,user.userName)' class="lever"></span>
+              <span @click='onOff(index,user.userName)'>On</span>
+            </label>
+          </span>
+        </span>
+        <span v-if='user.on' v-bind:style='{ color : color }' @click='update(user ,index)' id="special2" class="col s12 m6 l6">{{ user.userName }} - {{ user.email}}</span>
+        <span v-else @click='update(user, index)' id="special2" class="col s12 m6 l6">{{ user.userName }} - {{ user.email}}</span>
+        <span style="cursor:pointer" id="special3" class="new badge red darken-4" data-badge-caption="" @click='deleteUser(index)'>Delete</span>
+        <span v-bind:class="{ blue: user.gender == 'Male' }" id="special3" class="new badge red tooltipped" data-badge-caption="age">{{user.age}}</span>
+        <br><br>
       </li>
     </ol>
   </div>
@@ -100,4 +131,35 @@ export default {
 .switch {
   margin-right: 10px;
 }
+
+@media only screen and (max-width: 800px) {
+    #special1 {
+        width: 33%;
+    }
+
+    #special2 {
+      width: 65%;
+    }
+
+    #special3 {
+      width:22%;
+    }
+
+    #medium-large {
+      display: none;
+    }
+}
+
+@media only screen and (min-width: 801px) {
+  #small {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 602px) {
+  .qender {
+    text-align: center;
+  }
+}
+
 </style>
